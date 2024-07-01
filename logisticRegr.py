@@ -12,11 +12,13 @@ def logistic(x: float)->float:
 def logistic_prime(x: float)->float:
     y = logistic(x)
     return y*(1-y)
-def _negative_log_likelihood(x: Vector, y: float, beta: Vector)-> float:
-    if y==1:
-         return -math.log(logistic(dot(x,beta)))
+def _negative_log_likelihood(x: Vector, y: float, beta: Vector, epsilon=1e-10) -> float:
+    pred = logistic(dot(x, beta))
+    pred = max(epsilon, min(1 - epsilon, pred))  
+    if y == 1:
+        return -math.log(pred)
     else:
-        return -math.log(1-logistic(dot(x,beta)))
+        return -math.log(1 - pred)
 def negative_log_likelihood(xs: List[Vector], ys: List[Vector], beta: Vector)-> float:
     return sum(_negative_log_likelihood(x,y,beta) for x,y in zip(xs,ys))
 
