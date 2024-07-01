@@ -3,8 +3,9 @@ import pandas as pd
 import numpy as np
 import math
 from typing import List
-from supplementaries import Vector,dot, squared_distance, vector_sum
-
+from supplementaries import Vector,dot, squared_distance, vector_sum,gradient_step
+import random
+import tqdm
 def logistic(x: float)->float:
     return 1.0 / (1+math.exp(-x))
 
@@ -22,7 +23,7 @@ def negative_log_likelihood(xs: List[Vector], ys: List[Vector], beta: Vector)-> 
 def _negative_log_partial_j(x: Vector, y: float, beta: Vector, j : int)-> float:
     return -(y-logistic(dot(x,beta)))*x[j]
 def _negative_log_gradient(x: Vector, y: float, beta: Vector)->Vector:
-    return [_negative_log_partial_j((x,y,beta,j) for j in range(len(beta)))]
+    return [_negative_log_partial_j(x,y,beta,j) for j in range(len(beta))]
 def negative_log_gradient(xs: List[Vector], ys: List[ Vector], beta: Vector)-> Vector:
     return vector_sum([_negative_log_gradient(x,y,beta) for x,y in zip(xs,ys)])
 
@@ -52,3 +53,14 @@ split_index = int(split_ratio * len(X))
 
 X_train, X_test = X[:split_index], X[split_index:]
 y_train, y_test = y[:split_index], y[split_index:]
+
+beta = [random.random() for _ in range(len(X_train[0]))]
+
+learning_rate =0.1
+
+with tqdm.trange(5000) as t:
+    for epoch in t:
+        gradient = negative_log_gradient(X_train,y_train,beta)
+        beta = gradient_step(beta, gradient, -learning_rate)
+        los= negative_log_likelihood(X_train,y_train,beta)
+print(beta)
