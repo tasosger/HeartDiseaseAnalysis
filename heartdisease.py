@@ -1,9 +1,9 @@
-from linearAlgebra.linearAlgebra import Vector,dot, squared_distance
+from supplementaries import Vector,dot, squared_distance
 import math
 from typing import List
 import random
 import tqdm
-from gradientdescent import gradient_step
+from supplementaries  import gradient_step
 random.seed(0)
 from ucimlrepo import fetch_ucirepo 
 import pandas as pd
@@ -12,9 +12,7 @@ import numpy as np
 def step_function(x: float)-> float:
     return 1.0 if x>=0 else 0.0
 
-def perceptron_output(weights: Vector, bias: float, x: Vector) -> float:
-    calculation = dot(weights,x)+bias
-    return step_function(calculation)
+
 
 def sigmoid(t: float)-> float:
     return 1/ (1+math.exp(-t))
@@ -45,24 +43,9 @@ def sqerror_gradients(network: List[List[Vector]], input_vector: Vector, target_
 def argmax(xs: list) -> int:
     return max(range(len(xs)), key=lambda i: xs[i])
 
-def fizz_buzz_encode(x:int)->Vector:
-    if x%15 == 0:
-        return [0,0,0,1]
-    if x%5==0:
-        return [0,0,1,0]
-    if x%3==0:
-        return [0,1,0,0]
-    else:
-        return [1,0,0,0]
+
     
-def binary_encode(x:int)-> Vector:
-    binary: List[float] = []
-    for i in range(10):
-        binary.append(x%2)
-        x =x//2
-    return binary
-def xavier_initialization(size_in, size_out):
-    return [[random.uniform(-1.0, 1.0) * math.sqrt(6 / (size_in + size_out)) for _ in range(size_in + 1)] for _ in range(size_out)]
+
 
 
 heart_disease = fetch_ucirepo(id=45)
