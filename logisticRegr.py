@@ -47,3 +47,8 @@ X = df.drop('target', axis=1).values
 X = np.hstack([X, np.ones((X.shape[0], 1))])  
 y = df['target'].values
  
+split_ratio = 0.8
+split_index = int(split_ratio * len(X))
+
+X_train, X_test = X[:split_index], X[split_index:]
+y_train, y_test = y[:split_index], y[split_index:]
