@@ -81,7 +81,7 @@ network = [
 learning_rate = 1.0
 
 
-with tqdm.trange(500) as t:
+with tqdm.trange(5000) as t:
     for epoch in t:
         epoch_loss = 0.0
 

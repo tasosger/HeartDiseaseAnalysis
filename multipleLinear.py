@@ -76,3 +76,4 @@ accuracy = np.mean([pred == actual for pred, actual in zip(y_pred_test, y_test)]
 print("Accuracy on testing set:", accuracy)
 
 
+print('second approach:')

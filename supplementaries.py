@@ -34,3 +34,14 @@ def vector_sum (vectors: List[Vector])-> Vector:
     dimensions = len(vectors[0])
     assert all(len(v)==dimensions for v in vectors)
     return [sum(vector[i] for vector in vectors) for i in range(dimensions)]
+
+def mean(xs: Vector) -> float:
+    assert len(xs) > 0
+    return sum(xs) / len(xs)
+
+def de_mean(xs: Vector) -> Vector:
+    x_bar = mean(xs)
+    return [x - x_bar for x in xs]
+def vector_means(vectors: List[Vector])-> Vector:
+    n=len(vectors)
+    return scalar_multiply(1/n,vector_sum(vectors))
