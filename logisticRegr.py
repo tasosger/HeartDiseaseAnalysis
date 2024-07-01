@@ -60,9 +60,24 @@ beta = [random.random() for _ in range(len(X_train[0]))]
 
 learning_rate =0.1
 
-with tqdm.trange(5000) as t:
+with tqdm.trange(50) as t:
     for epoch in t:
         gradient = negative_log_gradient(X_train,y_train,beta)
         beta = gradient_step(beta, gradient, -learning_rate)
         los= negative_log_likelihood(X_train,y_train,beta)
 print(beta)
+
+true_positives =  false_positives = true_negatives = false_negatives = 0
+for x_i, y_i in zip(X_test,y_test):
+    prediction = logistic(dot(beta,x_i))
+    if y_i ==1 and prediction>=0.5:
+        true_positives+=1
+    elif y_i == 1 and prediction<0.5:
+        false_negatives+=1
+    elif y_i ==0  and prediction>=0.5:
+        false_positives+=1
+    else:
+        true_negatives+=1
+precision = true_positives/ (true_positives+false_positives)
+recall = true_positives / (true_positives+false_negatives)
+print(precision,recall)
