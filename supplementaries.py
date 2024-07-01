@@ -29,3 +29,8 @@ def gradient_step(v: Vector, gradient: Vector, step_size: float) ->float:
     assert len(gradient)==len(v)
     step = scalar_multiply(step_size,gradient)
     return add(v,step)
+
+def vector_sum (vectors: List[Vector])-> Vector:
+    dimensions = len(vectors[0])
+    assert all(len(v)==dimensions for v in vectors)
+    return [sum(vector[i] for vector in vectors) for i in range(dimensions)]
