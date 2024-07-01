@@ -68,16 +68,19 @@ with tqdm.trange(50) as t:
 print(beta)
 
 true_positives =  false_positives = true_negatives = false_negatives = 0
+accuracy =0
 for x_i, y_i in zip(X_test,y_test):
     prediction = logistic(dot(beta,x_i))
     if y_i ==1 and prediction>=0.5:
         true_positives+=1
+        accuracy+=1
     elif y_i == 1 and prediction<0.5:
         false_negatives+=1
     elif y_i ==0  and prediction>=0.5:
         false_positives+=1
     else:
         true_negatives+=1
+        accuracy+=1
 precision = true_positives/ (true_positives+false_positives)
 recall = true_positives / (true_positives+false_negatives)
-print(precision,recall)
+print(precision,recall,accuracy/len(X_test))
